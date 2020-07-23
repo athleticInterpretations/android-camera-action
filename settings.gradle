@@ -1,2 +1,3 @@
+include ':ApplicationFramework'
 include ':app'
 rootProject.name = "Athletic Interpretations"
