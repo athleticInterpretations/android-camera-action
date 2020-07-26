@@ -21,9 +21,9 @@ object Logger {
     /**
      * Helper method for logging e-verbose
      *
-     * @param tag       Used to identify the source of a log message. It usually identifies the class or
+     * @param tag Used to identify the source of a log message. It usually identifies the class or
      * activity where the log call occurs
-     * @param msg       The message you would like log
+     * @param msg The message you would like log
      * @param exception Exception is the superclass of all classes that represent recoverable exceptions
      */
     fun e(tag: String, msg: String, exception: Exception) {
