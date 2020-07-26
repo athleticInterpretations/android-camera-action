@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">ApplicationFramework</string>
+
+    <!-- application labels -->
+    <string name="days_hours_mins">%1$sd %2$sh %3$sm</string>
+</resources>
