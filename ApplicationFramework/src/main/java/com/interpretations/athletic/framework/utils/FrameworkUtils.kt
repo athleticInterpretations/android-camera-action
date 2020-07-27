@@ -71,16 +71,15 @@ object FrameworkUtils {
      * used only for verbosity mode
      *
      * @param context  Interface to global information about an application environment
-     * @param activity The in-memory representation of a Java class
      */
-    fun printInfo(context: Context, activity: Activity) {
+    fun printInfo(context: Context) {
         if (Constants.DEBUG && Constants.DEBUG_VERBOSE) {
             // determine phone carrier
             val manager = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
             val carrierName = manager.networkOperatorName
             // get display metrics
             val displayMetrics = DisplayMetrics()
-            activity.windowManager.defaultDisplay.getMetrics(displayMetrics)
+            (context as Activity).windowManager.defaultDisplay.getMetrics(displayMetrics)
             try {
                 Logger.i(TAG_INFO, "===== DEVICE INFORMATION =====" +
                         "\nManufacturer: " + Build.MANUFACTURER +
