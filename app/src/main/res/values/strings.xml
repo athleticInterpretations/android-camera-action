@@ -1,12 +1,19 @@
 <resources>
     <string name="app_name">Athletic Interpretations</string>
 
-    <!-- dialog -->
+    <!-- dialog buttons-->
     <string name="retry">Retry</string>
     <string name="ok">OK</string>
     <string name="okay">Okay</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+
+    <!-- dialog messages -->
     <string name="check_network">Sorry for the delay. We\'re having trouble connecting.
         Check your internet connection and we\'ll have you traveling shortly.</string>
+    <string name="permission_required_to_use_camera">Your permission is required to use the Camera.</string>
+
+    <!-- dialog titles -->
+    <string name="no_internet_detected">No Internet Detected</string>
+    <string name="camera_permission_required">Camera Permissions Required</string>
 </resources>
