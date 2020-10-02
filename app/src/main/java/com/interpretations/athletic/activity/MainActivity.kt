@@ -22,6 +22,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.interpretations.athletic.R
 import com.interpretations.athletic.databinding.ActivityMainBinding
+import com.interpretations.athletic.enums.CameraInfo
 import com.interpretations.athletic.framework.base.BaseActivity
 import com.interpretations.athletic.framework.utils.FrameworkUtils
 import com.interpretations.athletic.network.NetworkReceiver
@@ -62,8 +63,8 @@ class MainActivity : BaseActivity(), NetworkReceiver.NetworkStatusObserver {
     // this property is only valid between onCreateView and onDestroyView
     private lateinit var binding: ActivityMainBinding
 
-    // camera
-    private var cameraId: String? = null
+    // camera & properties
+    private var cameraId: String = CameraInfo.FRONT_FACING_CAMERA.toString()
     private var cameraDevice: CameraDevice? = null
     private var cameraCaptureSession: CameraCaptureSession? = null
     private var imageReader: ImageReader? = null
@@ -240,7 +241,7 @@ class MainActivity : BaseActivity(), NetworkReceiver.NetworkStatusObserver {
                 throw RuntimeException(EXCEPTION_TIMEOUT_LOCK_CAMERA_OPENING)
             }
             // open a connection to a camera with the given ID
-            manager.openCamera(cameraId.orEmpty(), stateCallback, backgroundHandler)
+            manager.openCamera(cameraId, stateCallback, backgroundHandler)
         } catch (e: CameraAccessException) {
             e.printStackTrace()
         } catch (e: InterruptedException) {
@@ -268,12 +269,13 @@ class MainActivity : BaseActivity(), NetworkReceiver.NetworkStatusObserver {
     ) {
         val manager = getSystemService(CAMERA_SERVICE) as CameraManager
         try {
-            for (cameraId in manager.cameraIdList) {
+            if (manager.cameraIdList.contains(cameraId)) {
                 val characteristics = manager.getCameraCharacteristics(cameraId)
 
+                // the available stream configurations that this camera device supports
                 val map = characteristics.get(
                     CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP
-                ) ?: continue
+                ) ?: return
 
                 // for still image captures, we use the largest available size
                 val largest = Collections.max(
@@ -313,8 +315,6 @@ class MainActivity : BaseActivity(), NetworkReceiver.NetworkStatusObserver {
                     width, height, maxPreviewWidth,
                     maxPreviewHeight, largest
                 )
-                this.cameraId = cameraId
-                return
             }
         } catch (e: CameraAccessException) {
             e.printStackTrace()
